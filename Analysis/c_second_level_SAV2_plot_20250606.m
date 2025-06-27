@@ -178,10 +178,10 @@ for mm = 1:length(suffixes)
     
         % singleplot beta whole cluster
         cfg = []; 
-        cfg.colors = [0, 128, 0; ... %rich green
-              215, 38, 56; ... %deep red
-              166, 215, 91; ... %Lime Green
-              233, 150, 58]/255; %Soft Orange;
+        cfg.colors = [255 60 54; ... %stay T
+                     136 255 72; ... %move T
+                     136 136 136; ... %stay C
+                     102 102 102]/255; %move C
         cfg.linestyle = {'-', '-', '-', '-'};
         cfg.layout = caplocation;
         cfg.mask = true_mask{cluster_num};
@@ -189,34 +189,34 @@ for mm = 1:length(suffixes)
         %cfg.channel = "CP1"
         %cfg.baseline = [-0.05 -0.005];
         cfg.xlim = [-0.05 0.5];
-        cfg.ylim = [-1.5 2.5];
-        GIAN_plot_data(cfg, Touch_Move, Touch_Stay, Control_Move, Control_Stay)
+        cfg.ylim = [-1.5 2];
+        GIAN_plot_data(cfg, Touch_Stay, Touch_Move, Control_Stay, Control_Move)
         exportgraphics(gcf, strcat(img_folder, '/singleplot_betas_cluster', int2str(cluster_num), '.emf'))
         close all
     
         % singleplot con whole cluster
         cfg = []; 
-        cfg.colors = [0, 128, 0; ... %rich green
-                      215, 38, 56]/255; %deep red
+        cfg.colors = [255 60 54; ... %stay T
+                     136 255 72]/255; %move T
         cfg.linestyle = {'-', '-'};
         cfg.layout = caplocation;
         cfg.channel = clust_chans{cluster_num};
         cfg.mask = true_mask{cluster_num};
         %cfg.baseline = [-0.05 -0.005];
         cfg.xlim = [-0.05 0.5];
-        cfg.ylim = [-1.5 2.5];
-        %cfg.printlayers = 1;
-        %cfg.output_printlayers = strcat(img_folder, '/singleplot_cons_cluster', int2str(cluster_num));
-        GIAN_plot_data(cfg, con_Touch_Move_Control, con_Touch_Stay_Control)
+        cfg.ylim = [-1.5 2];
+        cfg.printlayers = 1;
+        cfg.output_printlayers = strcat(img_folder, '/singleplot_cons_cluster', int2str(cluster_num));
+        GIAN_plot_data(cfg, con_Touch_Stay_Control, con_Touch_Move_Control)
         exportgraphics(gcf, strcat(img_folder, '/singleplot_cons_cluster', int2str(cluster_num), '.emf'))
         close all
     
         % singleplot beta centroid
         cfg = []; 
-        cfg.colors = [0, 128, 0; ... %rich green
-              215, 38, 56; ... %deep red
-              166, 215, 91; ... %Lime Green
-              233, 150, 58]/255; %Soft Orange;
+        cfg.colors = [255 60 54; ... %stay T
+                     136 255 72; ... %move T
+                     136 136 136; ... %stay C
+                     102 102 102]/255; %move C
         cfg.linestyle = {'-', '-', '-', '-'};
         cfg.layout = caplocation;
         cfg.mask = true_mask{cluster_num};
@@ -224,25 +224,25 @@ for mm = 1:length(suffixes)
         %cfg.channel = "CP1"
         %cfg.baseline = [-0.05 -0.005];
         cfg.xlim = [-0.05 0.5];
-        cfg.ylim = [-1.5 2.5];
-        GIAN_plot_data(cfg, Touch_Move, Touch_Stay, Control_Move, Control_Stay)
+        cfg.ylim = [-1.5 2];
+        GIAN_plot_data(cfg, Touch_Stay, Touch_Move, Control_Stay, Control_Move)
         exportgraphics(gcf, strcat(img_folder, '/singleplot_betas_centroid', int2str(cluster_num), '.emf'))
         close all
     
         % singleplot con centroid
         cfg = []; 
-        cfg.colors = [0, 128, 0; ... %rich green
-                      215, 38, 56]/255; %deep red
+        cfg.colors = [255 60 54; ... %stay T
+                     136 255 72]/255; %move T
         cfg.linestyle = {'-', '-', '-'};
         cfg.layout = caplocation;
         cfg.channel = centroid{cluster_num};
         cfg.mask = true_mask{cluster_num};
         %cfg.baseline = [-0.05 -0.005];
         cfg.xlim = [-0.05 0.5];
-        cfg.ylim = [-1.5 2.5];
-        % cfg.printlayers = 1;
-        % cfg.output_printlayers = strcat(img_folder, '/singleplot_cons_centroid', int2str(cluster_num));
-        GIAN_plot_data(cfg, con_Touch_Move_Control, con_Touch_Stay_Control)
+        cfg.ylim = [-1.5 2];
+        cfg.printlayers = 1;
+        cfg.output_printlayers = strcat(img_folder, '/singleplot_cons_centroid', int2str(cluster_num));
+        GIAN_plot_data(cfg, con_Touch_Stay_Control, con_Touch_Move_Control)
         exportgraphics(gcf, strcat(img_folder, '/singleplot_cons_centroid', int2str(cluster_num), '.emf'))
         close all
     
@@ -300,36 +300,20 @@ for mm = 1:length(suffixes)
             exportgraphics(gcf, strcat(img_folder, '/topoplot_timedetail', int2str(cluster_num), '.emf'))
             close all
         end
-    
-        %topoplot sequence, significant electrodes highligthed. 
-        % try
-        %     prova_crudo = prova_prosciutto;
-        %     prova_crudo.avg((true_mask{cluster_num}==0)) = nan;
-        %     cfg = [];
-        %     cfg.layout = caplocation;
-        %     %cfg.baseline = [-0.05 -0.005];
-        %     cfg.xlim = [0 min(timelims):((max(timelims)-min(timelims))/5):max(timelims) 0.5];
-        %     cfg.zlim = [-1 1];
-        %     cfg.colormap = '*RdBu';
-        %     ft_topoplotER(cfg, prova_crudo)
-        %     set(gcf,'units','normalized','outerpos',[0 0 1 1.2]);    
-        %     exportgraphics(gcf, strcat(img_folder, '/topoplot_timedetail_cluster', int2str(cluster_num), '.emf'))
-        %     close all
-        % end
-    
+        
         %multiplot betas
         figure;
-        Touch_Move.mask = true_mask{cluster_num}; 
+        Touch_Stay.mask = true_mask{cluster_num}; 
         cfg = []; 
-        cfg.linecolor = [0, 128, 0; ... %rich green
-                      215, 38, 56; ... %deep red
-                      166, 215, 91; ... %Lime Green
-                      233, 150, 58]/255; %Soft Orange;
+        cfg.linecolor = [255 60 54; ... %stay T
+                     136 255 72; ... %move T
+                     136 136 136; ... %stay C
+                     102 102 102]/255; %move C
         cfg.layout = caplocation;
         %cfg.baseline = [-0.05 -0.005];
         cfg.maskparameter = 'mask';
         cfg.maskfacealpha = 0.2;
-        ft_multiplotER(cfg, Touch_Move, Touch_Stay, Control_Move, Control_Stay)
+        ft_multiplotER(cfg, Touch_Stay, Touch_Move, Control_Stay, Control_Move)
         set(gcf,'units','normalized','outerpos',[0 0 1 1.2]);    
         exportgraphics(gcf, strcat(img_folder, '/multiplot_beta_cluster', int2str(cluster_num), '.emf'))
         close all
@@ -338,8 +322,8 @@ for mm = 1:length(suffixes)
         figure;
         con_Touch_Move_Control.mask = true_mask{cluster_num}; 
         cfg = []; 
-        cfg.linecolor = [0, 128, 0; ... %rich green
-                      215, 38, 56]/255; %deep red
+        cfg.linecolor = [255 60 54; ... %stay T
+                     136 255 72]/255; %move T
         cfg.layout = caplocation;
         cfg.maskparameter = 'mask';
         cfg.maskfacealpha = 0.2;
@@ -350,7 +334,7 @@ for mm = 1:length(suffixes)
     
         %barplot cluster
         index = arrayfun(@(k) find(strncmp(clust_chans{cluster_num}{k},data.label,3)), 1:length(clust_chans{cluster_num}));
-        order_scans = ["Touch_Move", "Touch_Stay", "Control_Move", "Control_Stay"]; 
+        order_scans = ["Touch_Stay", "Touch_Move", "Control_Stay", "Control_Move"]; 
         bar_values = []; 
         for i = 1:length(order_scans)
             values = []; 
@@ -361,26 +345,33 @@ for mm = 1:length(suffixes)
             bar_values.(order_scans(i)).var = var(values); 
         end
      
-        colors_to_plot = [0, 128, 0; ... %rich green
-                      215, 38, 56; ... %deep red
-                      166, 215, 91; ... %Lime Green
-                      233, 150, 58]/255;%Soft Orange
+        colors_to_plot = [255 60 54; ... %stay T
+                     136 255 72; ... %move T
+                     136 136 136; ... %stay C
+                     102 102 102]/255; %move C
+
         figure;
         hold on
         for i = 1:4
-            aaa = bar(i, bar_values.(order_scans(i)).mean, 'FaceColor', colors_to_plot(i,:), 'BarWidth',1, 'FaceAlpha', 1);
-            errorbar([i],  bar_values.(order_scans(i)).mean, sqrt(bar_values.(order_scans(i)).var)/sqrt(length(subjects)),'k','LineWidth', 0.5,'linestyle','none','HandleVisibility','off'); 
+            if i < 3
+                aaa = bar(i, bar_values.(order_scans(i)).mean, 'LineStyle', '-', 'EdgeColor', colors_to_plot(i,:), 'FaceColor', 'none', 'LineWidth', 2);
+                errorbar([i],  bar_values.(order_scans(i)).mean, sqrt(bar_values.(order_scans(i)).var)/sqrt(length(subjects)),'Color', colors_to_plot(i,:), 'CapSize', 0, 'LineWidth', 2); 
+            else
+                aaa = bar(i+0.5, bar_values.(order_scans(i)).mean, 'LineStyle', '-', 'EdgeColor', colors_to_plot(i,:), 'FaceColor', 'none', 'LineWidth', 2);
+                errorbar([i]+0.5,  bar_values.(order_scans(i)).mean, sqrt(bar_values.(order_scans(i)).var)/sqrt(length(subjects)),'Color', colors_to_plot(i,:), 'CapSize', 0, 'LineWidth', 2); 
+            end
         end
         set(gca,'xticklabel',{[]})
         set(gca,'xtick',[])
-        ylim([0 3])
+        ylim([0 2])
+        xlim([0.4 5.1])
         exportgraphics(gcf, strcat(img_folder, '/barplot_wholemask_cluster', int2str(cluster_num), '.emf'))
         close all
     
     
         %barplot centroid
         index = arrayfun(@(k) find(strncmp(centroid{cluster_num}{k},data.label,3)), 1:length(centroid{cluster_num}));
-        order_scans = ["Touch_Move", "Touch_Stay", "Control_Move", "Control_Stay"]; 
+        order_scans = ["Touch_Stay", "Touch_Move", "Control_Stay", "Control_Move"]; 
         bar_values = []; 
         for i = 1:length(order_scans)
             values = []; 
@@ -391,20 +382,26 @@ for mm = 1:length(suffixes)
             bar_values.(order_scans(i)).var = var(values); 
         end
      
-        colors_to_plot = [0, 128, 0; ... %rich green
-                      215, 38, 56; ... %deep red
-                      166, 215, 91; ... %Lime Green
-                      233, 150, 58]/255;%Soft Orange
+        colors_to_plot = [255 60 54; ... %stay T
+                     136 255 72; ... %move T
+                     136 136 136; ... %stay C
+                     102 102 102]/255; %move C
         
         figure; 
         hold on
         for i = 1:4
-            aaa = bar(i, bar_values.(order_scans(i)).mean, 'FaceColor', colors_to_plot(i,:), 'BarWidth',1, 'FaceAlpha', 1);
-            errorbar([i],  bar_values.(order_scans(i)).mean, sqrt(bar_values.(order_scans(i)).var)/sqrt(length(subjects)),'k','LineWidth', 0.5,'linestyle','none','HandleVisibility','off'); 
+            if i < 3
+                aaa = bar(i, bar_values.(order_scans(i)).mean, 'LineStyle', '-', 'EdgeColor', colors_to_plot(i,:), 'FaceColor', 'none', 'LineWidth', 2);
+                errorbar([i],  bar_values.(order_scans(i)).mean, sqrt(bar_values.(order_scans(i)).var)/sqrt(length(subjects)),'Color', colors_to_plot(i,:), 'CapSize', 0, 'LineWidth', 2); 
+            else
+                aaa = bar(i+0.5, bar_values.(order_scans(i)).mean, 'LineStyle', '-', 'EdgeColor', colors_to_plot(i,:), 'FaceColor', 'none', 'LineWidth', 2);
+                errorbar([i]+0.5,  bar_values.(order_scans(i)).mean, sqrt(bar_values.(order_scans(i)).var)/sqrt(length(subjects)),'Color', colors_to_plot(i,:), 'CapSize', 0, 'LineWidth', 2); 
+            end
         end
         set(gca,'xticklabel',{[]})
         set(gca,'xtick',[])
         ylim([0 3])
+        xlim([0.4 5.1])
         exportgraphics(gcf, strcat(img_folder, '/barplot_wholemask_centroid', int2str(cluster_num), '.emf'))
         close all
     end
@@ -441,10 +438,10 @@ for mm = 1:length(suffixes)
     for cluster_num = 1:length(clust_chans)
         % singleplot beta whole cluster
         cfg = []; 
-        cfg.colors = [0, 109, 91; ... %dark teal green
-                      168, 51, 61; ... %muted red
-                      166, 215, 91; ...%Lime Green
-                      233, 150, 58]/255; %Soft Orange
+        cfg.colors = [175 0 23; ...  %stay A
+                     0 135 65; ... %move A
+                     136 136 136; ... %stay C
+                     102 102 102]/255; %move C
         cfg.linestyle = {'-', '-', '-', '-'};
         cfg.layout = caplocation;
         cfg.mask = true_mask{cluster_num};
@@ -452,34 +449,34 @@ for mm = 1:length(suffixes)
         %cfg.channel = "CP1"
         %cfg.baseline = [-0.05 -0.005];
         cfg.xlim = [-0.05 0.5];
-        cfg.ylim = [-1.5 2.5];
-        GIAN_plot_data(cfg, Audio_Move, Audio_Stay, Control_Move, Control_Stay)
+        cfg.ylim = [-1.5 2];
+        GIAN_plot_data(cfg, Audio_Stay, Audio_Move, Control_Stay, Control_Move)
         exportgraphics(gcf, strcat(img_folder, '/singleplot_betas_cluster', int2str(cluster_num), '.emf'))
         close all
     
         % singleplot con whole cluster
         cfg = []; 
-        cfg.colors = [0, 109, 91; ... %dark teal green
-                      168, 51, 61]/255; %muted red
+        cfg.colors = [175 0 23; ...  %stay A
+                     0 135 65]/255; %move A        
         cfg.linestyle = {'-', '-'};
         cfg.layout = caplocation;
         cfg.channel = clust_chans{cluster_num};
         cfg.mask = true_mask{cluster_num};
         %cfg.baseline = [-0.05 -0.005];
         cfg.xlim = [-0.05 0.5];
-        cfg.ylim = [-1.5 2.5];
-        %cfg.printlayers = 1;
-        %cfg.output_printlayers = strcat(img_folder, '/singleplot_cons_cluster', int2str(cluster_num));
-        GIAN_plot_data(cfg, con_Audio_Move_Control, con_Audio_Stay_Control)
+        cfg.ylim = [-1.5 2];
+        cfg.printlayers = 1;
+        cfg.output_printlayers = strcat(img_folder, '/singleplot_cons_cluster', int2str(cluster_num));
+        GIAN_plot_data(cfg, con_Audio_Stay_Control, con_Audio_Move_Control)
         exportgraphics(gcf, strcat(img_folder, '/singleplot_cons_cluster', int2str(cluster_num), '.emf'))
         close all
     
         % singleplot beta centroid
         cfg = []; 
-        cfg.colors = [0, 109, 91; ... %dark teal green
-                      168, 51, 61; ... %muted red
-                      166, 215, 91; ...%Lime Green
-                      233, 150, 58]/255; %Soft Orange
+        cfg.colors = [175 0 23; ...  %stay A
+                     0 135 65; ... %move A
+                     136 136 136; ... %stay C
+                     102 102 102]/255; %move C
         cfg.linestyle = {'-', '-', '-', '-'};
         cfg.layout = caplocation;
         cfg.mask = true_mask{cluster_num};
@@ -487,25 +484,25 @@ for mm = 1:length(suffixes)
         %cfg.channel = "CP1"
         %cfg.baseline = [-0.05 -0.005];
         cfg.xlim = [-0.05 0.5];
-        cfg.ylim = [-1.5 2.5];
-        GIAN_plot_data(cfg, Audio_Move, Audio_Stay, Control_Move, Control_Stay)
+        cfg.ylim = [-1.5 2];
+        GIAN_plot_data(cfg, Audio_Stay, Audio_Move, Control_Stay, Control_Move)
         exportgraphics(gcf, strcat(img_folder, '/singleplot_betas_centroid', int2str(cluster_num), '.emf'))
         close all
     
         % singleplot con centroid
         cfg = []; 
-        cfg.colors = [0, 109, 91; ... %dark teal green
-                      168, 51, 61]/255; %muted red
-        cfg.linestyle = {'-', '-', '-'};
+        cfg.colors = [175 0 23; ...  %stay A
+                     0 135 65]/255; %move A
+        cfg.linestyle = {'-', '-'};
         cfg.layout = caplocation;
         cfg.channel = centroid{cluster_num};
         cfg.mask = true_mask{cluster_num};
         %cfg.baseline = [-0.05 -0.005];
         cfg.xlim = [-0.05 0.5];
-        cfg.ylim = [-1.5 2.5];
-        % cfg.printlayers = 1;
-        % cfg.output_printlayers = strcat(img_folder, '/singleplot_cons_centroid', int2str(cluster_num));
-        GIAN_plot_data(cfg, con_Audio_Move_Control, con_Audio_Stay_Control)
+        cfg.ylim = [-1.5 2];
+        cfg.printlayers = 1;
+        cfg.output_printlayers = strcat(img_folder, '/singleplot_cons_centroid', int2str(cluster_num));
+        GIAN_plot_data(cfg, con_Audio_Stay_Control, con_Audio_Move_Control)
         exportgraphics(gcf, strcat(img_folder, '/singleplot_cons_centroid', int2str(cluster_num), '.emf'))
         close all
     
@@ -564,60 +561,41 @@ for mm = 1:length(suffixes)
             close all
         end
     
-        %topoplot sequence, significant electrodes highligthed. 
-        % try
-        %     prova_crudo = prova_prosciutto;
-        %     prova_crudo.avg((true_mask{cluster_num}==0)) = nan;
-        %     cfg = [];
-        %     cfg.layout = caplocation;
-        %     %cfg.baseline = [-0.05 -0.005];
-        %     cfg.xlim = [0 min(timelims):((max(timelims)-min(timelims))/5):max(timelims) 0.5];
-        %     cfg.zlim = [-1 1];
-        %     cfg.colormap = '*RdBu';
-        %     ft_topoplotER(cfg, prova_crudo)
-        %     set(gcf,'units','normalized','outerpos',[0 0 1 1.2]);    
-        %     exportgraphics(gcf, strcat(img_folder, '/topoplot_timedetail_cluster', int2str(cluster_num), '.emf'))
-        %     close all
-        % end
-    
         %multiplot betas
         figure;
-        Audio_Move.mask = true_mask{cluster_num}; 
+        Audio_Stay.mask = true_mask{cluster_num}; 
         cfg = []; 
-        cfg.linecolor = [0, 0, 1; ... %blue
-                        0.4, 0.4, 1; ... %light blue
-                        0.7, 0.7, 1; ... %very light blue
-                        1, 0, 0; ... %red
-                        1, 0.4, 0.4 %light red
-                        1, 0.7, 0.7]; %very light red
+        cfg.linecolor = [175 0 23; ...  %stay A
+                         0 135 65; ... %move A
+                         136 136 136; ... %stay C
+                         102 102 102]/255; %move C
         cfg.layout = caplocation;
         %cfg.baseline = [-0.05 -0.005];
         cfg.maskparameter = 'mask';
         cfg.maskfacealpha = 0.2;
         set(gcf,'units','normalized','outerpos',[0 0 1 1.2]);    
-        ft_multiplotER(cfg, Audio_Move, Audio_Stay, Control_Move, Control_Stay)
+        ft_multiplotER(cfg, Audio_Stay, Audio_Move, Control_Stay, Control_Move)
         exportgraphics(gcf, strcat(img_folder, '/multiplot_beta_cluster', int2str(cluster_num), '.emf'))
         close all
     
         %multiplot cons
         figure;
-        con_Audio_Move_Control.mask = true_mask{cluster_num}; 
+        con_Audio_Stay_Control.mask = true_mask{cluster_num}; 
         cfg = []; 
-        cfg.linecolor = [1, 0, 0; ... %red
-                        1, 0.4, 0.4 %light red
-                        1, 0.7, 0.7]; %very light red
+        cfg.linecolor = [175 0 23; ...  %stay A
+                         0 135 65]/255; %move A
         cfg.layout = caplocation;
         %cfg.baseline = [-0.05 -0.005];
         cfg.maskparameter = 'mask';
         cfg.maskfacealpha = 0.2;
         set(gcf,'units','normalized','outerpos',[0 0 1 1.2]);    
-        ft_multiplotER(cfg, con_Audio_Move_Control, con_Audio_Stay_Control)
+        ft_multiplotER(cfg, con_Audio_Stay_Control, con_Audio_Move_Control)
         exportgraphics(gcf, strcat(img_folder, '/multiplot_cons_cluster', int2str(cluster_num), '.emf'))
         close all
     
         %barplot cluster
         index = arrayfun(@(k) find(strncmp(clust_chans{cluster_num}{k},data.label,3)), 1:length(clust_chans{cluster_num}));
-        order_scans = ["Audio_Move", "Audio_Stay", "Control_Move", "Control_Stay"]; 
+        order_scans = ["Audio_Stay", "Audio_Move", "Control_Stay", "Control_Move"]; 
         bar_values = []; 
         for i = 1:length(order_scans)
             values = []; 
@@ -628,26 +606,32 @@ for mm = 1:length(suffixes)
             bar_values.(order_scans(i)).var = var(values); 
         end
      
-        colors_to_plot = [0, 109, 91; ... %dark teal green
-                      168, 51, 61; ... %muted red
-                      166, 215, 91; ... %Lime Green
-                      233, 150, 58]/255;%Soft Orange
+        colors_to_plot = [175 0 23; ...  %stay A
+                         0 135 65; ... %move A
+                         136 136 136; ... %stay C
+                         102 102 102]/255; %move C
         figure;
         hold on
         for i = 1:4
-            aaa = bar(i, bar_values.(order_scans(i)).mean, 'FaceColor', colors_to_plot(i,:), 'BarWidth',1, 'FaceAlpha', 1);
-            errorbar([i],  bar_values.(order_scans(i)).mean, sqrt(bar_values.(order_scans(i)).var)/sqrt(length(subjects)),'k','LineWidth', 0.5,'linestyle','none','HandleVisibility','off'); 
+            if i < 3
+                aaa = bar(i, bar_values.(order_scans(i)).mean, 'LineStyle', '-', 'EdgeColor', colors_to_plot(i,:), 'FaceColor', 'none', 'LineWidth', 2);
+                errorbar([i],  bar_values.(order_scans(i)).mean, sqrt(bar_values.(order_scans(i)).var)/sqrt(length(subjects)),'Color', colors_to_plot(i,:), 'CapSize', 0, 'LineWidth', 2); 
+            else
+                aaa = bar(i+0.5, bar_values.(order_scans(i)).mean, 'LineStyle', '-', 'EdgeColor', colors_to_plot(i,:), 'FaceColor', 'none', 'LineWidth', 2);
+                errorbar([i]+0.5,  bar_values.(order_scans(i)).mean, sqrt(bar_values.(order_scans(i)).var)/sqrt(length(subjects)),'Color', colors_to_plot(i,:), 'CapSize', 0, 'LineWidth', 2); 
+            end
         end
         set(gca,'xticklabel',{[]})
         set(gca,'xtick',[])
-        ylim([0 3])
+        ylim([0 2])
+        xlim([0.4 5.1])
         exportgraphics(gcf, strcat(img_folder, '/barplot_wholemask_cluster', int2str(cluster_num), '.emf'))
         close all
     
     
         %barplot centroid
         index = arrayfun(@(k) find(strncmp(centroid{cluster_num}{k},data.label,3)), 1:length(centroid{cluster_num}));
-        order_scans = ["Audio_Move", "Audio_Stay", "Control_Move", "Control_Stay"]; 
+        order_scans = ["Audio_Stay", "Audio_Move", "Control_Stay", "Control_Move"]; 
         bar_values = []; 
         for i = 1:length(order_scans)
             values = []; 
@@ -658,19 +642,25 @@ for mm = 1:length(suffixes)
             bar_values.(order_scans(i)).var = var(values); 
         end
      
-        colors_to_plot = [0, 109, 91; ... %dark teal green
-                      168, 51, 61; ... %muted red
-                      166, 215, 91; ... %Lime Green
-                      233, 150, 58]/255;%Soft Orange
+        colors_to_plot = [175 0 23; ...  %stay A
+                         0 135 65; ... %move A
+                         136 136 136; ... %stay C
+                         102 102 102]/255; %move C
         figure; 
         hold on
         for i = 1:4
-            aaa = bar(i, bar_values.(order_scans(i)).mean, 'FaceColor', colors_to_plot(i,:), 'BarWidth',1, 'FaceAlpha', 1);
-            errorbar([i],  bar_values.(order_scans(i)).mean, sqrt(bar_values.(order_scans(i)).var)/sqrt(length(subjects)),'k','LineWidth', 0.5,'linestyle','none','HandleVisibility','off'); 
+            if i < 3
+                aaa = bar(i, bar_values.(order_scans(i)).mean, 'LineStyle', '-', 'EdgeColor', colors_to_plot(i,:), 'FaceColor', 'none', 'LineWidth', 2);
+                errorbar([i],  bar_values.(order_scans(i)).mean, sqrt(bar_values.(order_scans(i)).var)/sqrt(length(subjects)),'Color', colors_to_plot(i,:), 'CapSize', 0, 'LineWidth', 2); 
+            else
+                aaa = bar(i+0.5, bar_values.(order_scans(i)).mean, 'LineStyle', '-', 'EdgeColor', colors_to_plot(i,:), 'FaceColor', 'none', 'LineWidth', 2);
+                errorbar([i]+0.5,  bar_values.(order_scans(i)).mean, sqrt(bar_values.(order_scans(i)).var)/sqrt(length(subjects)),'Color', colors_to_plot(i,:), 'CapSize', 0, 'LineWidth', 2); 
+            end
         end
         set(gca,'xticklabel',{[]})
         set(gca,'xtick',[])
         ylim([0 3])
+        xlim([0.4 5.1])
         exportgraphics(gcf, strcat(img_folder, '/barplot_wholemask_centroid', int2str(cluster_num), '.emf'))
         close all
     end

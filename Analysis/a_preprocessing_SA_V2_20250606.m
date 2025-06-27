@@ -1,11 +1,13 @@
 clc;clear;
 addpath(genpath('C:/Users/nnu02/Documents/MATLAB/spm12'));
-addpath('C:/Users/nnu02/Documents/MATLAB/fieldtrip-20220827');
+%addpath('C:/Users/nnu02/Documents/MATLAB/fieldtrip-master');
 addpath('E:/02Data/03Utils/Functions/');
-ft_defaults
+%ft_defaults
 
 subjects = ["01" "03", "04" "05" "06" "07" "08" "09" "11" "12" "13" "14" "15" "16" "17" "18" "20" "21" "22" "23" "24" "25" "26" "27" "28" "29" "30"];
 subjects = ["19"];
+
+subjects = ["05"];
 
 folder = 'F:/Gian_Polina_2025/02Data';
 restart_preprocessing = 1; %set to 1 for re-running all the preprocessing even when files are already saved
@@ -24,7 +26,7 @@ for ID = subjects
     
     %copy paste the loc file
     loc_dir = strcat(folder, '/ID', ID, '/00Behavioural/neuronavigation');
-    bdf_file = strcat(folder, '/ID', ID, '/01EEG/*', ID, '*.bdf');
+    bdf_file = strcat(folder, '/ID', ID, '/01EEG_20250606/*', ID, '*.bdf');
     bdf_file = dir(bdf_file); 
     bdf_file = strcat(bdf_file.folder, '\', bdf_file.name); 
     
@@ -118,6 +120,9 @@ for ID = subjects
                 cfg.preproc.demean = 'yes';
                 cfg.preproc.lpfilter = 'yes'; 
                 cfg.preproc.lpfreq = 45; 
+                cfg.preproc.hpfilter = 'yes'; 
+                cfg.preproc.hpfreq = 0.5; 
+                cfg.preproc.hpinstabilityfix = 'reduce'; 
                 cfg.ylim = [-20 20];
                 ft_databrowser(cfg, origin_epoched);
     

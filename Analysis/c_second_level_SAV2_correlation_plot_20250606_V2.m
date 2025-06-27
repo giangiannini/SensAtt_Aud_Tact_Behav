@@ -123,7 +123,7 @@ for mm = 1:length(suffixes)
     % p = polyfit(corr_index_thresh(:,2), SA_Audio_points', 1);
     % y_fit = polyval(p, corr_index_thresh(:,2));
     hold on; 
-    plot(b_range, y_fit, 'Color',[0.5 0.5 0.5], 'LineWidth', 3); 
+    plot(b_range, y_fit, 'Color',[0.5 0.5 0.5], 'LineWidth', 2); 
     x = b_range;
     y_upper = y_fit + ci;
     y_lower = y_fit - ci;
@@ -224,9 +224,9 @@ for mm = 1:length(suffixes)
     ci = 1.96 * se_fit;  % 95% CI
     
     figure; 
-    plot(corr_index_thresh(:,2), mean(data_to_plot), '*', 'Color',[0.5 0.5 0.5])
+    plot(corr_index_thresh(:,2), mean(data_to_plot), 'o', 'Color',[0.5 0.5 0.5], 'MarkerSize',  3)
     hold on; 
-    plot(b_range, y_fit, 'Color',[0.5 0.5 0.5], 'LineWidth', 3); 
+    plot(b_range, y_fit, 'Color',[0.5 0.5 0.5], 'LineWidth', 2); 
     x = b_range;
     y_upper = y_fit + ci;
     y_lower = y_fit - ci;
@@ -234,6 +234,9 @@ for mm = 1:length(suffixes)
     y_patch = [y_upper; flipud(y_lower)];
     fill(x_patch, y_patch, [0.7 0.7 0.7], 'EdgeColor', 'none', 'FaceAlpha', 0.4);  % light red
     xlim([min(b_range) max(b_range)])
+    ylim([-2 2])
+    set(gcf, 'Position',  [100, 100, 326, 479])
+    xticks([-0.8:0.2:0.8])
     xlabel('Behavioural attenuation')
     ylabel('Electrophysiological attenuation')
     title('Correlation in Audio modality - Cluster')
